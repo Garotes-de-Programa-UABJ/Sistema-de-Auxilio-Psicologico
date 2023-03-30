@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Perfil do Usuário</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+</head>
+<body>
+	<header>
+		<h1>Perfil do Usuário - Auxílio psicológio (UFRPE/UABJ)</h1>
+	</header>
+</body>
+</html>
+
+<form method="POST" action="{{ url_for('perfil') }}">
+	<fieldset>
+		<legend>Informações pessoais</legend>
+		<label for="nome_completo">Nome completo *</label>
+		<input type="text" id="nome_completo" name="nome_completo" required>
+
+		<label for="nome_social">Nome social</label>
+		<input type="text" id="nome_social" name="nome_social">
+
+		<label for="data_nascimento">Data de nascimento *</label>
+		<input type="date" id="data_nascimento" name="data_nascimento" required>
+
+		<label for="naturalidade">Naturalidade *</label>
+		<input type="text" id="naturalidade" name="naturalidade" required>
+
+		<label for="estado_civil">Estado civil *</label>
+		<select id="estado_civil" name="estado_civil" required>
+			<option value="">Selecione</option>
+			<option value="solteiro">Solteiro</option>
+            <option value="casado">Casado</option>
+            <option value="divorciado">Divorciado</option>
+            <option value="viuvo">Viúvo</option>
+        </select>
+    
+        <label for="cpf">CPF ou número de matrícula *</label>
+        <input type="text" id="cpf" name="cpf" required>
+    
+        <label for="telefone">Telefone (celular/whatsapp) *</label>
+        <input type="tel" id="telefone" name="telefone" required>
+    
+        <label for="email_institucional">Email institucional *</label>
+        <input type="email" id="email_institucional" name="email_institucional" required>
+    
+        <label for="email_alternativo">Email alternativo *</label>
+        <input type="email" id="email_alternativo" name="email_alternativo" required>
+    
+        <label for="endereco_residencial">Endereço residencial *</label>
+        <textarea id="endereco_residencial" name="endereco_residencial" rows="3" required></textarea>
+    
+        <label for="nome_mae">Nome da mãe *</label>
+        <input type="text" id="nome_mae" name="nome_mae" required>
+    
+        <label for="curso">Curso *</label>
+        <select id="curso" name="curso" required>
+            <option value="">Selecione</option>
+            <option value="computação">Engenharia da Computação</option>
+            <option value="automação">Engenharia de Controle e Automação</option>
+            <option value="química">Engenharia Química</option>
+            <option value="hídrica">Engenharia Hídrica</option>
+        </select>
+    
+        <label for="periodo_graduacao">Período de graduação *</label>
+        <input type="number" id="periodo_graduacao" name="periodo_graduacao" min="1" max="10" required>
+    
+        <label for="bolsista">Bolsista? *</label>
+        <select id="bolsista" name="bolsista" required>
+            <option value="">Selecione</option>
+            <option value="sim">Sim</option>
+            <option value="nao">Não</option>
+        </select>
+    
+           <label for="tipo_bolsa">Tipo de bolsa</label>
+            <select id="tipo_bolsa" name="tipo_bolsa">
+                <option value="">Selecione</option>
+                <option value="PAD">PAD</option>
+                <option value="PAI">PAI</option>
+                <option value="PAG">PAG/</option>
+                <option value="outro">Outro</option>
+            </select>
+        </div>
+    
+        <label for="motivo_atendimento">Descreva brevemente o motivo de estar procurando atendimento *</label>
+        <textarea id="motivo_atendimento" name="motivo_atendimento" rows="5" required></textarea>
+    
+        <label for="pronomes">Pronomes</label>
+        <select id="pronomes" name="pronomes">
+            <option value="">Selecione</option>
+            <option value="ele">ele/dele</option>
+            <option value="ela">ela/dela</option>
+            <option value="neutro">neutro</option>
+        </select>
+    </fieldset>
+    
+    <button type="submit">Salvar</button>
+</form>    
+</html>
+
+<footer>
+    <p>© Garotes de Programa- 2023 - Todos os direitos reservados</p>
+</footer>

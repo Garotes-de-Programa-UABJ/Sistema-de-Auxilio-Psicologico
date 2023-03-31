@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acompanhamento de consulta</title>
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}"> -->
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='acompanhamento.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css">
+  <link rel="icon" href="/static/img/logo.ico" type="image/x-icon">
+
+</head>
+
+<body>
+
+  <header class="navbar1">
+    
+    <img src="/static/img/logo.png" alt="">
+
+    <ul>
+      <li class="navlink"><a href="/">Agendar</a></li>
+
+      <li class="navlink"><a href="/acompanhamento">Acompanhamento</a></li>
+
+      <li class="navlink"><a href="https://www.ufrpe.br">UFRPE</a></li>
+
+      <li class="navlink"><a href="https://github.com/Garotes-de-Programa-UABJ/Teste-de-Linguagens">Projeto</a></li>
+
+      <li class="navlink" id="sobre" href="#" onclick="sorry()">Histórico</li>
+
+      <li class="navlink">Sair</li>
+    </ul>
+
+    <!-- Esse botão é o botãozinho hamburger do 'modo mobile' (não atente-se aos detalhes, apenas copie e cole no seu código) -->
+    <button class="btn-drop" onclick="menuDrop()">
+
+      <svg class="ham hamRotate ham1" viewBox="0 0 100 100" width="80" onclick="this.classList.toggle('active')"
+        onclick="menuDrop()">
+        <path class="line top"
+          d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40" />
+        <path class="line middle" d="m 30,50 h 40" />
+        <path class="line bottom"
+          d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40" />
+
+    </button>
+  </header>
+
+  <!-- Essa segunda 'navbar' ficará oculta, só aparecerá quando o  botãozinho do modo mobile for clicado -->
+  <header class="navbar2" id="navbar2">
+    <ul>
+
+      <!-- <li> adiciona os itens da lista -->
+      <!-- <a href=""> coloca links nos itens (os links você coloca entre as aspas do "href") -->
+      <li class="navlink"><a href="/">Agendar</a></li>
+
+      <li class="navlink"><a href="/acompanhamento">Acompanhamento</a></li>
+
+      <li class="navlink"><a href="https://www.ufrpe.br">UFRPE</a></li>
+
+      <li class="navlink"><a href="https://github.com/Garotes-de-Programa-UABJ/Teste-de-Linguagens">Projeto</a></li>
+
+      <li class="navlink" id="sobre" href="/historico">Sobre</li>
+
+      <li class="navlink">Sair</li>
+    </ul>
+  </header>
+
+  <div class="main">
+
+    <h1>Acompanhar Consulta</h1>
+
+    <div class="info-card">
+
+      <div class="primeiro">
+
+        {% for linha in dados %}
+        <div class="data esquerda">
+          <label for="">Consulta:</label>
+          <h4 class="date">{{ linha[5] }}</h4>
+        </div>
+
+        <div class="direita">
+          <div class="status">
+            CONFIRMADO
+          </div>
+          <button class="mais" id="abre-fecha" onclick="mostrarMais()">Mostrar mais</button>
+        </div>
+
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="info-card fechado" id="info-card">
+
+      <div class="segundo">
+
+        {% for linha in dados %}
+
+        <div class="organizador">
+
+          <label for="">Nome:</label>
+          <h4 class="name">{{ linha[0] }}</h4>
+
+        </div>
+
+        <div class="organizador">
+
+          <label for="">Email para contato:</label>
+          <h4 class="name">{{ linha[1] }}</h4>
+
+        </div>
+
+        <div class="organizador">
+
+          <label for="">CPF:</label>
+          <h4 class="cpf">{{ linha[2] }}</h4>
+
+        </div>
+
+        <div class="organizador">
+
+          <label for="">Curso:</label>
+          <h4 class="curso">{{ linha[3] }}</h4>
+
+        </div>
+
+        <div class="organizador">
+
+          <label for="">Contato:</label>
+          <h4 class="tel">{{ linha[4] }}</h4>
+
+        </div>
+
+        <div class="organizador">
+
+          <label for="">Data:</label>
+          <h4 class="date">{{ linha[5] }}</h4>
+
+        </div>
+
+        <div class="organizador">
+
+          <label for="">Horário:</label>
+          <h4 class="time">{{ linha[6] }}</h4>
+
+        </div>
+
+        <div class="organizador">
+
+          <label for="">Gênero:</label>
+          <h4 class="name">{{ linha[7] }}</h4>
+
+        </div>
+
+        <div class="btn-box organizador">
+          <button onclick="sorry()">Cancelar consulta</button>
+        </div>
+
+        <button class="menos" id="abre-fecha" onclick="mostrarMais()">Mostrar menos</button>
+
+        {% endfor %}
+      </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+
+
+    <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+    <!-- adicionando másscaras para input -->
+    <!-- essas máscaras inserem caracterees especiais no input dependendo do tipo de informação solicitada -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+
+    <script>
+      $('.date').mask('00/00/0000');
+      $('.time').mask('00:00:00');
+      $('.cpf').mask('000.000.000-00');
+      $('.cep').mask('00000-000');
+      $('.tel').mask('(00) 00000-0000');
+      $('.cpf').mask('000.000.000-00', { reverse: true });
+    </script>
+
+</body>
+
+</html>

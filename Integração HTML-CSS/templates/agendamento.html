@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento de consulta</title>
+    <link rel="icon" href="/static/img/logo.ico" type="image/x-icon">
+
+    <!-- Para o Flask, forma de referenciar um arquivo CSS ou JS é diferente do que seria em um documento normal. 
+
+    Documento normal: 
+    href="style.css"
+    
+    Documento no Flask:
+    href="{{ url_for('static', filename='main.css') }}"
+    -->
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
+    <link rel="icon" href="img/UFRPE.ico" type="image/x-icon">
+
+</head>
+
+<body>
+    <!-- Criando Barra de navegação, onde será possível navegar por outrar páginas atavés dos links contidos nos elementos. -->
+    <header class="navbar1">
+
+        <!-- <h1>PI2</h1> é o Logotipo fuleiro da demonstração -->
+        <!-- <h1>PI2</h1> -->
+        <img src="/static/img/logo.png" alt="">
+
+
+        <!-- <ul> cria uma lista -->
+        <ul>
+
+            <!-- <li> adiciona os itens da lista -->
+            <!-- <a href=""> coloca links nos itens (os links você coloca entre as aspas do "href") -->
+            <li class="navlink"><a href="/">Agendar</a></li>
+
+            <li class="navlink"><a href="/acompanhamento">Acompanhamento</a></li>
+
+            <li class="navlink"><a href="/perfil">Perfil</a></li>
+
+            <li class="navlink" id="sobre" href="/historico">Sobre</li>
+            
+            <li class="navlink"><a href="https://github.com/Garotes-de-Programa-UABJ/Teste-de-Linguagens">Projeto</a>
+            </li>
+                
+            <li class="navlink">Sair</li>
+        </ul>
+
+        <!-- Esse botão é o botãozinho hamburger do 'modo mobile' (não atente-se aos detalhes, apenas copie e cole no seu código) -->
+        <button class="btn-drop" onclick="menuDrop()">
+<!-- 
+            <svg class="ham hamRotate ham1" viewBox="0 0 100 100" width="80" onclick="this.classList.toggle('active')" onclick="menuDrop()">
+            <path class="line top" d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40" />
+            <path class="line middle" d="m 30,50 h 40" />
+            <path class="line bottom" d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40" /> -->
+        </button>
+    </header>
+
+    <!-- Essa segunda 'navbar' ficará oculta, só aparecerá quando o  botãozinho do modo mobile for clicado -->
+    <header class="navbar2" id="navbar2">
+        <ul>
+
+            <!-- <li> adiciona os itens da lista -->
+            <!-- <a href=""> coloca links nos itens (os links você coloca entre as aspas do "href") -->
+            <li class="navlink"><a href="/">Agendar</a></li>
+
+            <li class="navlink"><a href="/acompanhamento">Acompanhamento</a></li>
+
+            <li class="navlink"><a href="https://www.ufrpe.br">UFRPE</a></li>
+
+            <li class="navlink"><a href="https://github.com/Garotes-de-Programa-UABJ/Teste-de-Linguagens">Projeto</a>
+            </li>
+
+            <li class="navlink" id="sobre" href="/historico">Sobre</li>
+
+            <li class="navlink">Sair</li>
+        </ul>
+    </header>
+
+
+    <!-- Essa div com a classe ".box", ocupará todo o resto da página, e será utilizado para organizar e estilizar os elementos dentro dela, através do css -->
+
+    <div class="box">
+
+
+        <!-- <h1> é apenas um título -->
+        <h1>Agendar Consulta</h1>
+
+        <!-- Criação do formulário -->
+        <form action="/acompanhamento" method="POST">
+
+
+            <!-- 'autocomplete="off"' impede que abra uma janelinha com sugestões ao clicar no imput -->
+            <!-- <label> é um textinho que fica acima do elemento pra o usuário não se perder. -->
+            <!-- type="text" vai permitir que o usuário insira texto no input -->
+            <label for="nome">Nome completo:</label>
+            <input class="nome" type="text" name="nome" placeholder="Nome" autocomplete="off" required><br>
+
+            <label for="email">E-mail:</label>
+            <input class="email" type="email" name="email" placeholder="example@example.com" required><br>
+
+            <!-- 'autocomplete="off"' impede que abra uma janelinha com sugestões ao clicar no imput -->
+            <!-- 'maxlength' limita a quantidade de caracteres que o usuário pode inserir -->
+
+            <label for="CPF">CPF:</label>
+            <input class="cpf" type="text" id="cpf" name="cpf" autocomplete="off" placeholder="xxx.xxx.xxx-xx"
+                maxlength="11" required>
+
+            <!-- <select> abre uma lista de itens para o usuário escolher um -->
+            <!-- <option> a gente define as opções que serão mostradas -->
+            <label for="curso">Curso:</label>
+            <select class="curso" type="select" name="curso" required>
+                <option value="">--Selecionar--</option>
+                <option value="automacao">Engenharia de Controle e Automação</option>
+                <option value="computacao">Engenharia da Computação</option>
+                <option value="hidrica">Engenharia Hídrica</option>
+                <option value="quimica">Engenharia Química</option>
+            </select>
+            <br>
+
+            <!-- 'maxlength' limita a quantidade de caracteres que o usuário pode inserir -->
+            <!-- type="tel" vai permitir que o usuário insira numero de telefone no input -->
+            <label for="telefone">Telefone:</label>
+            <input class="tel" type="tel" name="telefone" id="telefone" placeholder="(xx) xx xxxxx-xxxx" maxlength="10"
+                required><br>
+
+
+            <!-- type="data" vai inserir um icone de um calendário automaticammente no input para o usuário escolher uma data -->
+            <label for="data">Data:</label>
+            <input class="data" type="date" name="data" required><br>
+
+            <!-- type="time" a mesma coisa do anterior, só que com horário -->
+            <label for="horario">Horário:</label>
+            <input class="hora" type="time" name="horario" required><br>
+
+            <label for="checkbox-genero">Gênero</label>
+            <select type="checkbox" name="genero" id="checkbox-genero">
+                <option value="">--Selecionar--</option>
+                <option value="feminino">Feminino</option>
+                <option value="masculino">Masculino</option>
+                <option value="negacao">Prefiro não informar</option>
+                <option value="outro">Outro</option>
+            </select>
+
+            <label for="vacina" id="file-label">Carteira de vacinação:</label>
+            <input class="vacina" id="file-input" type="file" name="vacina" required><br>
+
+            <div class="btn-box">
+                <input class="btn-agendar" type="submit" value="Agendar">
+            </div>
+        </form>
+    </div>
+
+    <!-- Referenciando o arquivo Javascript. Tudo que estiver escrito lá, afetara esta página -->
+    <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+
+    <!-- adicionando másscaras para input -->
+    <!-- essas máscaras inserem caracterees especiais no input dependendo do tipo de informação solicitada -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+
+    <script>
+        $('.date').mask('00/00/0000');
+        $('.time').mask('00:00:00');
+        $('.cpf').mask('000.000.000-00');
+        $('.cep').mask('00000-000');
+        $('.tel').mask('(00) 00000-0000');
+        $('.cpf').mask('000.000.000-00', { reverse: true });
+    </script>
+</body>
+
+</html>

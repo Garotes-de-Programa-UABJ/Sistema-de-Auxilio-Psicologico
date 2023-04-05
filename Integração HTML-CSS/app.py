@@ -30,7 +30,7 @@ with app.app_context():
 
 login_manager = LoginManager()
 login_manager.login_view = 'mostrarLogin'
-login_manager.login_message = 'Você precisa estar logado para acessar essa página.'
+login_manager.login_message = 'Você precisa estar logado para acessar essa página!'
 login_manager.login_message_category = 'info'
 login_manager.init_app(app)
 

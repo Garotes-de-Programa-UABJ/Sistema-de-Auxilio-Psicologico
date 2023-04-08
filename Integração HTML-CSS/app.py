@@ -41,7 +41,7 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
-    return render_template('formulario.html')
+    return render_template('login.html')
 
 @app.route('/agendar', methods=['POST'])
 @login_required

@@ -41,7 +41,11 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
+<<<<<<< HEAD
     return render_template('login.html')
+=======
+    return render_template('home.html')
+>>>>>>> f4f482782d0fc7525c8c29199bb53813a62aa2c3
 
 @app.route('/agendar', methods=['POST'])
 @login_required
@@ -72,6 +76,10 @@ def historico():
 def mostrarPerfil():
     logout_user()
     return render_template('perfil.html')
+
+@app.route('/home')
+def mostrarHome():
+    return render_template('home.html')
 
 @app.route("/acompanhamento")
 @login_required

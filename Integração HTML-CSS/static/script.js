@@ -74,15 +74,12 @@ dataInput.addEventListener("click", mostrarDatasDisponiveis);
 function mostrar_senha(){
   var senha = document.getElementById("senha");
   var senhaConfirm = document.getElementById("senha-confirmar");
-  var senhaLogin = document.getElementById("senhaLogin")
-  if (senha.type && senhaConfirm.type && senhaLogin.type == "password"){
+  if (senha.type && senhaConfirm.type == "password"){
     senha.type = "text";
     senhaConfirm.type = "text";
-    senhaLogin.type = "text";
   }else{
   senha.type = "password";  
   senhaConfirm.type = "password";
-  senhaLogin.type = "password";
 
   }
 }

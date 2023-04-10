@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Perfil do Usuário</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='perfil.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+
+<body>
+
+	<header class="navbar1">
+
+		<img src="/static/img/logo.png" alt="">
+
+		<ul>
+			<!-- <li> adiciona os itens da lista -->
+			<!-- <a href=""> coloca links nos itens (os links você coloca entre as aspas do "href") -->
+			<li class="navlink"><a href="/">Agendar</a></li>
+
+			<li class="navlink"><a href="/acompanhamento">Acompanhamento</a></li>
+
+			<li class="navlink"><a href="/historico">Histórico</a></li>
+
+			<li class="navlink"><a href="/perfil">Perfil</a></li>
+
+			<li class="navlink">Sair</li>
+		</ul>
+
+		<!-- Esse botão é o botãozinho hamburger do 'modo mobile' (não atente-se aos detalhes, apenas copie e cole no seu código) -->
+		<button class="btn-drop" onclick="menuDrop()">
+
+			<svg class="ham hamRotate ham1" viewBox="0 0 100 100" width="80" onclick="this.classList.toggle('active')"
+				onclick="menuDrop()">
+				<path class="line top"
+					d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40" />
+				<path class="line middle" d="m 30,50 h 40" />
+				<path class="line bottom"
+					d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40" />
+
+		</button>
+	</header>
+
+	<!-- Essa segunda 'navbar' ficará oculta, só aparecerá quando o  botãozinho do modo mobile for clicado -->
+	<header class="navbar2" id="navbar2">
+		<ul>
+			<!-- <li> adiciona os itens da lista -->
+			<!-- <a href=""> coloca links nos itens (os links você coloca entre as aspas do "href") -->
+			<li class="navlink"><a href="/">Agendar</a></li>
+
+			<li class="navlink"><a href="/acompanhamento">Acompanhamento</a></li>
+
+			<li class="navlink"><a href="/historico">Histórico</a></li>
+
+			<li class="navlink"><a href="/perfil">Perfil</a></li>
+
+			<li class="navlink">Sair</li>
+		</ul>
+	</header>
+
+	<div class="box">
+		<h1>Perfil do Usuário - Auxílio Psicológico (UFRPE/UABJ)</h1>
+		<section>
+			<h2>Informações pessoais</h2>
+			<!-- <li><strong>Nome completo:</strong> {{ nome_completo }}</li> -->
+			<label for="">Nome completo:</label>
+			<p> {{ nome_completo }}</p>
+			<label for="">Nome social:</label>
+			<p> {{ nome_completo }} </p>
+			<label for="">Data de nascimento:</label>
+			<p> {{ data_nascimento }}</p>
+			<label for="">Naturalidade:</label>
+			<p> {{ naturalidade }}</p>
+			<label for="">Estado civil:</label>
+			<p> {{ estado_civil }}</p>
+			<label for="">CPF ou número de matrícula:</label>
+			<p> {{ cpf }}</p>
+			<label for="">Telefone (celular/whatsapp):</label>
+			<p> {{ telefone }}</p>
+			<label for="">Email institucional:</label>
+			<p> {{ email_institucional }}</p>
+			<label for="">Email alternativo:</label>
+			<p> {{ email_alternativo }}</p>
+			<label for="">Endereço residencial:</label>
+			<p> {{ endereco_residencial }}</p>
+			<label for="">Nome da mãe:</label>
+			<p> {{ nome_mae }}</p>
+			<label for="">Curso:</label>
+			<p> {{ curso }}</p>
+			<label for="">Período de graduação:</label>
+			<p> {{ periodo_graduacao }}</p>
+			<label for="">Bolsista:</label>
+			<p> {{ bolsista }}</p>
+			<label for="">Tipo de bolsa:</label>
+			<p> {{ tipo_bolsa }}</p>
+			<label for="">Pronomes:</label>
+			<p> {{ pronomes }}</p>
+			<label for="">Motivo de atendimento:</label>
+			<p> {{ motivo_atendimento }}</p>
+			<h2>Cartão de vacina</h2>
+			<img src="{{ url_for('static', filename='cartao_de_vacina/{{ cartao_de_vacina }}') }}" alt="Cartão de vacina">
+			<div class="btn-box">
+				<!-- <button class="btn" type="submit">Editar</button> -->
+			</div>
+		</section>
+	</div>
+
+</body>
+
+</html>

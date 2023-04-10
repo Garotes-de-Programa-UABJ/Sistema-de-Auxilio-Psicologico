@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Perfil do Usuário</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='perfil.css') }}">
+</head>
+<body>
+	<header>
+		<h1>Perfil do Usuário - Auxílio Psicológico (UFRPE/UABJ)</h1>
+	</header>
+	<main>
+		<section>
+			<h2>Informações pessoais</h2>
+			<ul>
+				<li><strong>Nome completo:</strong> {{ nome_completo }}</li>
+				<li><strong>Nome social:</strong> {{ nome_social }}</li>
+				<li><strong>Data de nascimento:</strong> {{ data_nascimento }}</li>
+				<li><strong>Naturalidade:</strong> {{ naturalidade }}</li>
+				<li><strong>Estado civil:</strong> {{ estado_civil }}</li>
+				<li><strong>CPF ou número de matrícula:</strong> {{ cpf }}</li>
+				<li><strong>Telefone (celular/whatsapp):</strong> {{ telefone }}</li>
+				<li><strong>Email institucional:</strong> {{ email_institucional }}</li>
+				<li><strong>Email alternativo:</strong> {{ email_alternativo }}</li>
+				<li><strong>Endereço residencial:</strong> {{ endereco_residencial }}</li>
+				<li><strong>Nome da mãe:</strong> {{ nome_mae }}</li>
+				<li><strong>Curso:</strong> {{ curso }}</li>
+				<li><strong>Período de graduação:</strong> {{ periodo_graduacao }}</li>
+				<li><strong>Bolsista:</strong> {{ bolsista }}</li>
+				<li><strong>Tipo de bolsa:</strong> {{ tipo_bolsa }}</li>
+				<li><strong>Pronomes:</strong> {{ pronomes }}</li>
+				<li><strong>Motivo de atendimento:</strong> {{ motivo_atendimento }}</li>
+			</ul>
+		</section>
+		<section>
+			<h2>Cartão de vacina</h2>
+			<img src="{{ url_for('static', filename='cartao_de_vacina/{{ cartao_de_vacina }}') }}" alt="Cartão de vacina">
+		</section>
+	</main>
+</body>
+</html>

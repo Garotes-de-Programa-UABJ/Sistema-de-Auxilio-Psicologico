@@ -83,14 +83,22 @@ header a {
   gap: 2rem;
 }
 
-button {
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 0;
   background-color: #14284c;
   color: white;
   border-radius: 30px;
-  width: 100px;
+  width: 110px;
   height: 40px;
   cursor: pointer;
+}
+
+.btn a{
+  text-decoration: none;
+  color: white;
 }
 
 .main .direita {

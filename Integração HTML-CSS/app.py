@@ -17,10 +17,32 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), unique=False, nullable=False)
 
+class PerfilUsuario(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nome_completo = db.Column(db.String(100))
+    nome_social = db.Column(db.String(100))
+    data_nascimento = db.Column(db.String(100))
+    naturalidade = db.Column(db.String(100))
+    estado_civil = db.Column(db.String(100))
+    cpf = db.Column(db.String(100), unique=True)
+    telefone = db.Column(db.String(100))
+    email_institucional = db.Column(db.String(100), unique=True)
+    email_alternativo = db.Column(db.String(100), unique=True)
+    endereco_residencial = db.Column(db.String(100))
+    nome_mae = db.Column(db.String(100))
+    curso = db.Column(db.String(100))
+    periodo_graduacao = db.Column(db.String(100))
+    bolsista = db.Column(db.String(100))
+    tipo_bolsa = db.Column(db.String(100))
+    motivo_atendimento = db.Column(db.String(100))
+    pronomes = db.Column(db.String(100))
+
+
 class Agendamento(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     data = db.Column(db.String(80), unique=False, nullable=False)
     hora = db.Column(db.String(80), unique=False, nullable=False)
+    status= db.Column(db.String(80), unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     user= db.relationship('User', backref='agendamentos')
@@ -49,8 +71,9 @@ def agendar():
     user= current_user
     data = request.form['data']
     hora = request.form['hora']
+    status= 'agendado'
 
-    agendamento = Agendamento(data=data, hora=hora, user=user)
+    agendamento = Agendamento(data=data, hora=hora, user=user, status=status)
     db.session.add(agendamento)
     db.session.commit()
 
@@ -62,19 +85,25 @@ def agendar():
 def cadastradosucesso():
     return render_template('formulario.html')
 
-@app.route ('/historico')
+@app.route ('/historico', methods=['POST', 'GET'])
 @login_required
 def historico():
-    return render_template('historico.html')
+    
+    user = current_user
 
-# @app.route ('/perfil')
-# @login_required
-# def mostrarPerfil():
-#     logout_user()
-# return render_template('perfil.html')
+    consultas = Agendamento.query.all()
+    
+    return render_template('historico.html', consultas=consultas, user=user)
 
-@app.route('/perfil', methods=['POST'])
-def perfil():
+@app.route ('/perfil', methods=['GET'])
+@login_required
+def mostrarPerfil():
+    user= current_user
+    return render_template('perfil.html', user=user)
+
+@app.route('/perfil_bd', methods=['POST'])
+@login_required
+def perfil_bd():
     nome_completo = request.form['nome_completo']
     nome_social = request.form['nome_social']
     data_nascimento = request.form['data_nascimento']
@@ -93,23 +122,27 @@ def perfil():
     motivo_atendimento = request.form['motivo_atendimento']
     pronomes = request.form['pronomes']
 
-    # banco de dados aqui
+    perfil_usuário= PerfilUsuario(nome_completo=nome_completo, nome_social=nome_social, data_nascimento=data_nascimento, naturalidade=naturalidade, estado_civil=estado_civil, cpf=cpf, telefone=telefone, email_institucional=email_institucional, email_alternativo=email_alternativo, endereco_residencial=endereco_residencial, nome_mae=nome_mae, curso=curso, periodo_graduacao=periodo_graduacao, bolsista=bolsista, tipo_bolsa=tipo_bolsa, motivo_atendimento=motivo_atendimento, pronomes=pronomes)
 
-    return render_template('perfil.html', nome_completo=nome_completo, nome_social=nome_social, data_nascimento=data_nascimento, naturalidade=naturalidade, estado_civil=estado_civil, cpf=cpf, telefone=telefone, email_institucional=email_institucional, email_alternativo=email_alternativo, endereco_residencial=endereco_residencial, nome_mae=nome_mae, curso=curso, periodo_graduacao=periodo_graduacao, bolsista=bolsista, tipo_bolsa=tipo_bolsa, motivo_atendimento=motivo_atendimento, pronomes=pronomes)
+    db.session.add(perfil_usuário)
+    db.session.commit()
+
+    flash('Perfil atualizado com sucesso', 'success')
+    return redirect(url_for('perfil'))
 
 @app.route('/home')
 def mostrarHome():
     return render_template('home.html')
 
-@app.route("/acompanhamento")
+@app.route("/acompanhamento", methods=['POST', 'GET'])
 @login_required
 def acompanhamento():
-
-    # Obter todos os agendamentos do banco de dados
-    agendamentos = Agendamento.query.all()
-
     # Obter o usuário atualmente logado
     user = current_user
+
+    # Obter todos os agendamentos do banco de dados
+    agendamentos = Agendamento.query.filter_by(status='agendado').all()
+
 
     # Renderizar a página de acompanhamento, passando a lista de agendamentos e o usuário atualmente logado
     return render_template('acompanhamento.html', agendamentos=agendamentos, user=user)

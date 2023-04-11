@@ -85,55 +85,6 @@ def agendar():
 def cadastradosucesso():
     return render_template('formulario.html')
 
-@app.route ('/historico', methods=['POST', 'GET'])
-@login_required
-def historico():
-    
-    user = current_user
-
-    consultas = Agendamento.query.all()
-    
-    return render_template('historico.html', consultas=consultas, user=user)
-
-@app.route ('/perfil', methods=['GET'])
-@login_required
-def mostrarPerfil():
-    user= current_user
-    return render_template('perfil.html', user=user)
-
-@app.route('/perfil_bd', methods=['POST'])
-@login_required
-def perfil_bd():
-    nome_completo = request.form['nome_completo']
-    nome_social = request.form['nome_social']
-    data_nascimento = request.form['data_nascimento']
-    naturalidade = request.form['naturalidade']
-    estado_civil = request.form['estado_civil']
-    cpf = request.form['cpf']
-    telefone = request.form['telefone']
-    email_institucional = request.form['email_institucional']
-    email_alternativo = request.form['email_alternativo']
-    endereco_residencial = request.form['endereco_residencial']
-    nome_mae = request.form['nome_mae']
-    curso = request.form['curso']
-    periodo_graduacao = request.form['periodo_graduacao']
-    bolsista = request.form['bolsista']
-    tipo_bolsa = request.form['tipo_bolsa']
-    motivo_atendimento = request.form['motivo_atendimento']
-    pronomes = request.form['pronomes']
-
-    perfil_usuário= PerfilUsuario(nome_completo=nome_completo, nome_social=nome_social, data_nascimento=data_nascimento, naturalidade=naturalidade, estado_civil=estado_civil, cpf=cpf, telefone=telefone, email_institucional=email_institucional, email_alternativo=email_alternativo, endereco_residencial=endereco_residencial, nome_mae=nome_mae, curso=curso, periodo_graduacao=periodo_graduacao, bolsista=bolsista, tipo_bolsa=tipo_bolsa, motivo_atendimento=motivo_atendimento, pronomes=pronomes)
-
-    db.session.add(perfil_usuário)
-    db.session.commit()
-
-    flash('Perfil atualizado com sucesso', 'success')
-    return redirect(url_for('perfil'))
-
-@app.route('/home')
-def mostrarHome():
-    return render_template('home.html')
-
 @app.route("/acompanhamento", methods=['POST', 'GET'])
 @login_required
 def acompanhamento():
@@ -146,6 +97,30 @@ def acompanhamento():
 
     # Renderizar a página de acompanhamento, passando a lista de agendamentos e o usuário atualmente logado
     return render_template('acompanhamento.html', agendamentos=agendamentos, user=user)
+
+@app.route ('/historico', methods=['POST', 'GET'])
+@login_required
+def historico():
+    
+    user = current_user
+
+    consultas = Agendamento.query.all()
+    
+    return render_template('historico.html', consultas=consultas, user=user)
+
+@app.route('/perfil', methods=['POST','GET'])
+@login_required
+def perfil():
+    user = current_user
+
+    perfil_usuário = PerfilUsuario.query.filter_by(id=user.id).first()
+
+    return render_template('perfil.html', user=user, perfil_usuário=perfil_usuário)
+
+@app.route('/home')
+def mostrarHome():
+    return render_template('home.html')
+
 
 @app.route ('/login')
 def mostrarLogin():
@@ -168,7 +143,7 @@ def login_db():
 
     # Se todas as verificações passarem, o usuário tem as credenciais corretas
     login_user(user)
-    return redirect(url_for('mostrarPerfil'))
+    return redirect(url_for('perfil'))
 
 @app.route ('/register')
 def mostrarCadastro():

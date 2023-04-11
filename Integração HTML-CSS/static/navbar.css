@@ -98,7 +98,7 @@ h1 {
   color: white;
 }
 
-h1::selection,
+a::selection,
 form label::selection {
   background-color: white;
   color: #0c1729;

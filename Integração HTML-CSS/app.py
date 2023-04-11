@@ -13,7 +13,6 @@ db = SQLAlchemy(app)
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(80), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), unique=False, nullable=False)
 
@@ -71,14 +70,19 @@ def agendar():
     user= current_user
     data = request.form['data']
     hora = request.form['hora']
-    status= 'agendado'
+    status= 'Agendado'
+
+    # Verificar se o usuário já possui um agendamento
+    agendamento_existente = Agendamento.query.filter_by(user=user).first()
+    if agendamento_existente:
+        flash("Você já possui uma consulta marcada.", "danger")
+        return redirect(url_for('cadastradosucesso'))
 
     agendamento = Agendamento(data=data, hora=hora, user=user, status=status)
     db.session.add(agendamento)
     db.session.commit()
 
-    flash('Agendamento realizado com sucesso!', 'success')
-    return render_template('sucesso.html')
+    return redirect(url_for('acompanhamento'))
 
 @app.route ('/agendamento')
 @login_required
@@ -152,7 +156,6 @@ def mostrarCadastro():
 @app.route('/cadastro-db', methods=['POST'])
 def register_db():
     email = request.form.get('email')
-    name = request.form.get('name')
     password = request.form.get('password')
 
     user = User.query.filter_by(email=email).first() # se o email já existir, não deixa registrar
@@ -162,7 +165,7 @@ def register_db():
         return redirect(url_for('mostrarCadastro'))
 
     # crie um novo usuário com os dados do formulário. Faça o hash da senha para que a versão em texto simples não seja salva.
-    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
+    new_user = User(email=email, password=generate_password_hash(password, method='sha256'))
 
     # Adicione o novo usuário ao banco de dados
     db.session.add(new_user)

@@ -20,7 +20,7 @@
       {% endwith %}
     <form method='POST' action="/cadastro-db" >
       <label for="nome">Nome Completo:</label>
-      <input type="text" name="name" class="nome" required><br>
+      <input type="text" name="name" class="nome"><br>
       
       <label for="email">Email:</label>
       <input type="email" name="email" class="email" required><br>
@@ -40,7 +40,7 @@
       </div>
 
       <div class="btn-box">
-        <input type="submit" class="btn" value="Cadastrar" onclick="window.location.href='cadastradosucesso.html'">
+        <input type="submit" class="btn" value="Cadastrar">
         <p class="mt-3"><a href="{{ url_for('mostrarCadastro') }}">Entrar</a></p>
       </div>
       

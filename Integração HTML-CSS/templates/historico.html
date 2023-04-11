@@ -1,1 +1,133 @@
-historico
+<!DOCTYPE html>  <!-- documento tipo html -->
+<html lang="pt-BR"> <!--linguagem portuguesa a ser utilizada -->
+
+<head><!-- Esta seção contém informações sobre a página, como o título e o link para um arquivo CSS que fornece estilos para a página.
+       As meta tags fornecem informações adicionais para o navegador,
+       como a codificação de caracteres a ser usada, a compatibilidade com o Internet Explorer e a escala inicial da página.-->
+    <meta charset="UTF-8"> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico do usuário</title>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='historico.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
+
+
+</head>
+
+
+<body><!--Esta é a seção do corpo da página, que contém todo o conteúdo visível.-->
+<!-- -->
+<header class="navbar1">
+   <div>
+    <img src="/static/img/Brasão_UFRPE.png" alt="">
+  </div> 
+  
+
+  <ul>
+    <li class="navlink"><a href="/">Agendar</a></li>
+
+    <li class="navlink"><a href="/acompanhamento">Acompanhamento</a></li>
+    
+    <li class="navlink"><a href="/historico">Histórico</a></li>
+
+    <li class="navlink"><a href="https://www.ufrpe.br">UFRPE</a></li>
+    
+    <li class="navlink"><a href="https://github.com/Garotes-de-Programa-UABJ/Teste-de-Linguagens">Sobre</a></li>
+
+    <li class="navlink">Sair</li>
+  </ul>
+  </header>
+
+    <div class="main"> <!--Este é um contêiner div que agrupa todo o conteúdo da página -->
+
+      <h1>Seu Histórico</h1> <!--Este é um cabeçalho h1 que mostra o título da página. -->
+
+      <!-- classe "tabela" eu usei pra organizar todas as barras no formato de coluna pelo CSS-->
+      <div class="tabela">
+
+        <!-- Criando barrinha das consultas -->
+        <!-- classe "linha" usei pra guardar o título da barra e o botão de informações no sentido horizontal,
+        Esta é uma div que tem a classe "linha" e "marcadas".
+           Essa div contém um título de nível 3 (h3) com o texto "marcadas" e um botão com o texto "Informações". -->
+        <div class="linha Consultas marcadas">
+
+          {%for linha in dados%}
+
+          <h3>Consultas Marcadas</h3>
+          <button id="1-botao" onclick="mostrarTexto('resultado-1')">Informações</button>
+          <p id="resultado-1">{{linha[0]}}</p>
+
+          {%endfor%}
+        
+
+        </div>
+
+        <!-- Criando barrinha das consultas,Esta é uma div que tem a classe "linha" e "marcadas".
+           Essa div contém um título de nível 3 (h3) com o texto "Remarcadas" e um botão com o texto "Informações". -->
+        <div class="linha Consultas remarcadas">
+
+          {%for linha in dados%}
+
+          <h3>Consultas Remarcadas</h3>
+          <button id="2-botao" onclick="mostrarTexto('resultado-2')">Informações</button>
+          <p id="resultado-2">{{linha[1]}}</p>
+
+          {%endfor%}
+
+        </div>
+
+        <!-- Criando barrinha das consultas,Esta é outra div com a classe "linha" e "analise".
+           Também contém um título de nível 3 (h3) com o texto "Em análise" e um botão com o texto "Informações" -->
+        <div class="linha Consultas analise">
+
+          {%for linha in dados%}
+
+          <h3>Consultas em análise</h3>
+          <button id="3-botao" onclick="mostrarTexto('resultado-3')">Informações</button>
+          <p id="resultado-3">{{linha[2]}}</p>
+
+          {%endfor%}
+
+        </div>
+
+        
+        <!-- Criando barrinha das consultas, Esta é outra div com a classe "linha" e "realizadas".
+             Também contém um título de nível 3 (h3) com o texto "Realizadas" e um botão com o texto "Mostrar Texto". -->
+        <div class="linha Consultas realizadas">
+
+          {%for linha in dados%}
+
+          <h3>Consultas Realizadas</h3>
+          <button id="4-botao" onclick="mostrarTexto('resultado-4')">Informações</button>
+          <p id="resultado-4">{{linha[3]}}</p>
+
+          {%endfor%}
+
+        </div>
+        
+
+        <!-- Criando barrinha das consultas,Esta div tem a classe "linha" e "canceladas".
+           Ele contém um título de nível 3 (h3) com o texto "canceladas" e um botão com o texto "Informações". -->
+        <div class="linha Consultas canceladas">
+
+          {%for linha in dados%}
+
+          <h3>Consultas canceladas</h3>
+          <button id="5-botao" onclick="mostrarTexto('resultado-5')">Informações</button>
+          <p id="resultado-5">{{linha[4]}}</p>
+
+          {%endfor%}
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+</body>
+
+</html>

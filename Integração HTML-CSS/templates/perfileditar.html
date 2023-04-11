@@ -70,7 +70,7 @@
 
         <h1>Perfil do Usuário</h1>
 
-        <form method="POST" action="{{ url_for('perfil') }}">
+        <form method="POST" action="/perfil-editar_bd">
 
             <legend>Informações pessoais</legend>
             <label for="nome_completo">Nome completo *</label>
@@ -150,6 +150,18 @@
                 <option value="ela">ela/dela</option>
                 <option value="neutro">neutro</option>
             </select>
+
+            <label for="checkbox-genero">Gênero</label>
+            <select type="checkbox" name="genero" id="checkbox-genero">
+                <option value="">--Selecionar--</option>
+                <option value="feminino">Feminino</option>
+                <option value="masculino">Masculino</option>
+                <option value="negacao">Prefiro não informar</option>
+                <option value="outro">Outro</option>
+            </select>
+
+            <label for="vacina" id="file-label">Carteira de vacinação:</label>
+            <input class="vacina" id="file-input" type="file" name="vacina" required><br>
 
             <div class="btn-box">
                 <button class="btn" type="submit">Salvar</button>

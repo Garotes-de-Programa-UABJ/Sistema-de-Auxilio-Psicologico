@@ -96,61 +96,61 @@
 
       <div class="segundo">
 
-        {% for linha in agendamentos %}
+        {% for linha in dados %}
 
         <div class="organizador">
 
           <label for="">Nome:</label>
-          <h4 class="name">{{ linha.perfil.nome_social }}</h4>
+          <h4 class="name">{{ linha[0] }}</h4>
 
         </div>
 
         <div class="organizador">
 
           <label for="">Email para contato:</label>
-          <h4 class="name">{{ linha.perfil.user.email }}</h4>
+          <h4 class="name">{{ linha[1] }}</h4>
 
         </div>
 
         <div class="organizador">
 
           <label for="">CPF:</label>
-          <h4 class="cpf">{{ linha.perfil.cpf }}</h4>
+          <h4 class="cpf">{{ linha[2] }}</h4>
 
         </div>
 
         <div class="organizador">
 
           <label for="">Curso:</label>
-          <h4 class="curso">{{ linha.perifl.curso }}</h4>
+          <h4 class="curso">{{ linha[3] }}</h4>
 
         </div>
 
         <div class="organizador">
 
           <label for="">Contato:</label>
-          <h4 class="tel">{{ linha.perfil.telefone }}</h4>
+          <h4 class="tel">{{ linha[4] }}</h4>
 
         </div>
 
         <div class="organizador">
 
           <label for="">Data:</label>
-          <h4 class="date">{{ linha.data }}</h4>
+          <h4 class="date">{{ linha[5] }}</h4>
 
         </div>
 
         <div class="organizador">
 
           <label for="">Horário:</label>
-          <h4 class="time">{{ linha.hora }}</h4>
+          <h4 class="time">{{ linha[6] }}</h4>
 
         </div>
 
         <div class="organizador">
 
           <label for="">Gênero:</label>
-          <h4 class="name">{{ linha.perfil.genero }}</h4>
+          <h4 class="name">{{ linha[7] }}</h4>
 
         </div>
 

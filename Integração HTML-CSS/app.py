@@ -13,6 +13,7 @@ db = SQLAlchemy(app)
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(80), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), unique=False, nullable=False)
 
@@ -26,7 +27,7 @@ class PerfilUsuario(db.Model):
     cpf = db.Column(db.String(100), unique=True)
     telefone = db.Column(db.String(100))
     email_institucional = db.Column(db.String(100), unique=True)
-    email_alternativo = db.Column(db.String(100))
+    email_alternativo = db.Column(db.String(100), unique=True)
     endereco_residencial = db.Column(db.String(100))
     nome_mae = db.Column(db.String(100))
     curso = db.Column(db.String(100))
@@ -35,9 +36,6 @@ class PerfilUsuario(db.Model):
     tipo_bolsa = db.Column(db.String(100))
     motivo_atendimento = db.Column(db.String(100))
     pronomes = db.Column(db.String(100))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-    user = db.relationship('User', backref='perfil')
 
 
 class Agendamento(db.Model):
@@ -45,9 +43,9 @@ class Agendamento(db.Model):
     data = db.Column(db.String(80), unique=False, nullable=False)
     hora = db.Column(db.String(80), unique=False, nullable=False)
     status= db.Column(db.String(80), unique=False, nullable=False)
-    perfil_id = db.Column(db.Integer, db.ForeignKey('PerfilUsuario.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    perfil= db.relationship('PerfilUsuario', backref='agendamentos')
+    user= db.relationship('User', backref='agendamentos')
 
 with app.app_context():
     db.create_all()
@@ -70,35 +68,35 @@ def index():
 @app.route('/agendar', methods=['POST'])
 @login_required
 def agendar():
-    perfil= current_user.perfil
+    user= current_user
     data = request.form['data']
     hora = request.form['hora']
-    status= 'Agendado'
+    status= 'agendado'
 
-    agendamento = Agendamento(data=data, hora=hora, perfil=perfil, status=status)
+    agendamento = Agendamento(data=data, hora=hora, user=user, status=status)
     db.session.add(agendamento)
     db.session.commit()
 
     flash('Agendamento realizado com sucesso!', 'success')
-    return render_template('agendamento.html')
+    return render_template('sucesso.html')
 
 @app.route ('/agendamento')
 @login_required
 def cadastradosucesso():
-    return render_template('agendamento.html')
+    return render_template('formulario.html')
 
 @app.route("/acompanhamento", methods=['POST', 'GET'])
 @login_required
 def acompanhamento():
     # Obter o usuário atualmente logado
-    perfil = current_user.perfil
+    user = current_user
 
     # Obter todos os agendamentos do banco de dados
     agendamentos = Agendamento.query.filter_by(status='agendado').all()
 
 
     # Renderizar a página de acompanhamento, passando a lista de agendamentos e o usuário atualmente logado
-    return render_template('acompanhamento.html', agendamentos=agendamentos, perfil=perfil)
+    return render_template('acompanhamento.html', agendamentos=agendamentos, user=user)
 
 @app.route ('/historico', methods=['POST', 'GET'])
 @login_required
@@ -118,50 +116,6 @@ def perfil():
     perfil_usuário = PerfilUsuario.query.filter_by(id=user.id).first()
 
     return render_template('perfil.html', user=user, perfil_usuário=perfil_usuário)
-
-@app.route('/perfil-editar', methods=['POST','GET'])
-@login_required
-def perfil_editar():
-    return render_template('perfileditar.html')
-
-@app.route('/perfil-editar_bd', methods=['POST','GET'])
-@login_required
-def perfil_editar_bd():
-    nome_completo = request.form['nome_completo']
-    nome_social = request.form['nome_social']
-    data_nascimento = request.form['data_nascimento']
-    naturalidade = request.form['naturalidade']
-    estado_civil = request.form['estado_civil']
-    cpf = request.form['cpf']
-    telefone = request.form['telefone']
-    email_institucional = request.form['email_institucional']
-    email_alternativo = request.form['email_alternativo']
-    endereco_residencial = request.form['endereco_residencial']
-    nome_mae = request.form['nome_mae']
-    curso = request.form['curso']
-    periodo_graduacao = request.form['periodo_graduacao']
-    bolsista = request.form['bolsista']
-    tipo_bolsa = request.form['tipo_bolsa']
-    motivo_atendimento = request.form['motivo_atendimento']
-    pronomes = request.form['pronomes']
-    user= current_user
-
-    cpf = User.query.filter_by(cpf=cpf).first()
-    inst = User.query.filter_by(email_institucional=email_institucional).first()
-    if cpf:
-        flash('CPF já cadastrado!')
-        return redirect(url_for('perfil_editar'))
-    elif inst:
-        flash('Email já cadastrado!')
-        return redirect(url_for('perfil_editar'))
-    
-    new_perf= PerfilUsuario(nome_completo=nome_completo, nome_social=nome_social, data_nascimento=data_nascimento, naturalidade=naturalidade, estado_civil=estado_civil, cpf=cpf, telefone=telefone, email_institucional=email_institucional, email_alternativo=email_alternativo, endereco_residencial=endereco_residencial, nome_mae=nome_mae, curso=curso, periodo_graduacao=periodo_graduacao, bolsista=bolsista, tipo_bolsa=tipo_bolsa, motivo_atendimento=motivo_atendimento, pronomes=pronomes, user=user)
-
-    db.session.add(new_perf)
-    db.session.commit()
-
-    return redirect(url_for('perfil'))
-
 
 @app.route('/home')
 def mostrarHome():
@@ -198,6 +152,7 @@ def mostrarCadastro():
 @app.route('/cadastro-db', methods=['POST'])
 def register_db():
     email = request.form.get('email')
+    name = request.form.get('name')
     password = request.form.get('password')
 
     user = User.query.filter_by(email=email).first() # se o email já existir, não deixa registrar
@@ -207,15 +162,13 @@ def register_db():
         return redirect(url_for('mostrarCadastro'))
 
     # crie um novo usuário com os dados do formulário. Faça o hash da senha para que a versão em texto simples não seja salva.
-    new_user = User(email=email, password=generate_password_hash(password, method='sha256'))
+    new_user = User(email=email, name=name, password=generate_password_hash(password, method='sha256'))
 
     # Adicione o novo usuário ao banco de dados
     db.session.add(new_user)
     db.session.commit()
 
-    login_user(new_user)
-
-    return redirect(url_for('perfil_editar'))
+    return redirect(url_for('mostrarLogin'))
 
 @app.route('/logout')
 @login_required

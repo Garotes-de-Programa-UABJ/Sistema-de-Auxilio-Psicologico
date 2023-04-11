@@ -31,7 +31,7 @@
 
             <li class="navlink"><a href="/perfil">Perfil</a></li>
 
-            <li class="navlink">Sair</li>
+            <li class="navlink"><a href="/logout">Sair</a></li>
         </ul>
 
         <!-- Esse botão é o botãozinho hamburger do 'modo mobile' (não atente-se aos detalhes, apenas copie e cole no seu código) -->
@@ -61,7 +61,7 @@
 
             <li class="navlink"><a href="/perfil">Perfil</a></li>
 
-            <li class="navlink">Sair</li>
+            <li class="navlink"><a href="/logout">Sair</a></li>
         </ul>
     </header>
 
@@ -70,7 +70,7 @@
 
         <h1>Perfil do Usuário</h1>
 
-        <form method="POST" action="{{ url_for('perfil') }}">
+        <form method="POST" action="/perfil-editar_bd">
 
             <legend>Informações pessoais</legend>
             <label for="nome_completo">Nome completo *</label>
@@ -95,7 +95,7 @@
             </select>
 
             <label for="cpf">CPF ou número de matrícula *</label>
-            <input type="cpf" id="cpf" name="cpf" required>
+            <input type="text" id="cpf" name="cpf" required>
 
             <label for="telefone">Telefone (celular/whatsapp) *</label>
             <input type="tel" id="telefone" name="telefone" required>
@@ -156,7 +156,7 @@
                 <option value="">--Selecionar--</option>
                 <option value="feminino">Feminino</option>
                 <option value="masculino">Masculino</option>
-                <option value="negacao">Prefiro não informar</option>
+                <option value="negação">Prefiro não informar</option>
                 <option value="outro">Outro</option>
             </select>
 

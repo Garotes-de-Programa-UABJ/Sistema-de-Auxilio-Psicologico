@@ -25,7 +25,7 @@
 
 			<li class="navlink"><a href="/perfil">Perfil</a></li>
 
-			<li class="navlink">Sair</li>
+			<li class="navlink"><a href="/logout">Sair</a></li>
 		</ul>
 
 		<!-- Esse botão é o botãozinho hamburger do 'modo mobile' (não atente-se aos detalhes, apenas copie e cole no seu código) -->
@@ -55,7 +55,7 @@
 
 			<li class="navlink"><a href="/perfil">Perfil</a></li>
 
-			<li class="navlink">Sair</li>
+			<li class="navlink"><a href="/logout">Sair</a></li>
 		</ul>
 	</header>
 
@@ -64,40 +64,44 @@
 		<section>
 			<h2>Informações pessoais</h2>
 			<!-- <li><strong>Nome completo:</strong> {{ nome_completo }}</li> -->
+			{% for linha in perfilU %}
 			<label for="">Nome completo:</label>
-			<p> {{ nome_completo }}</p>
+			<h4> {{ linha.nome_completo }}</h4>
 			<label for="">Nome social:</label>
-			<p> {{ nome_completo }} </p>
+			<h4> {{ linha.nome_social }} </h4>
 			<label for="">Data de nascimento:</label>
-			<p> {{ data_nascimento }}</p>
+			<h4> {{ linha.data_nascimento }}</h4>
 			<label for="">Naturalidade:</label>
-			<p> {{ naturalidade }}</p>
+			<h4> {{ linha.naturalidade }}</h4>
 			<label for="">Estado civil:</label>
-			<p> {{ estado_civil }}</p>
+			<h4> {{ linha.estado_civil }}</h4>
 			<label for="">CPF ou número de matrícula:</label>
-			<p> {{ cpf }}</p>
+			<h4> {{ linha.cpf }}</h4>
 			<label for="">Telefone (celular/whatsapp):</label>
-			<p> {{ telefone }}</p>
+			<h4> {{ linha.telefone }}</h4>
 			<label for="">Email institucional:</label>
-			<p> {{ email_institucional }}</p>
+			<h4> {{ linha.email_institucional }}</h4>
 			<label for="">Email alternativo:</label>
-			<p> {{ email_alternativo }}</p>
+			<h4> {{ linha.email_alternativo }}</h4>
 			<label for="">Endereço residencial:</label>
-			<p> {{ endereco_residencial }}</p>
+			<h4> {{ linha.endereco_residencial }}</h4>
 			<label for="">Nome da mãe:</label>
-			<p> {{ nome_mae }}</p>
+			<h4> {{ linha.nome_mae }}</h4>
 			<label for="">Curso:</label>
-			<p> {{ curso }}</p>
+			<h4> {{ linha.curso }}</h4>
 			<label for="">Período de graduação:</label>
-			<p> {{ periodo_graduacao }}</p>
+			<h4> {{ linha.periodo_graduacao }}</h4>
 			<label for="">Bolsista:</label>
-			<p> {{ bolsista }}</p>
+			<h4> {{ linha.bolsista }}</h4>
 			<label for="">Tipo de bolsa:</label>
-			<p> {{ tipo_bolsa }}</p>
+			<h4> {{ linha.tipo_bolsa }}</h4>
 			<label for="">Pronomes:</label>
-			<p> {{ pronomes }}</p>
+			<h4> {{ linha.pronomes }}</h4>
+			<label for="">Gênero:</label>
+			<h4> {{ linha.genero }}</h4>
 			<label for="">Motivo de atendimento:</label>
-			<p> {{ motivo_atendimento }}</p>
+			<h4> {{ linha.motivo_atendimento }}</h4>
+			{% endfor %}
 			<h2>Cartão de vacina</h2>
 			<img src="{{ url_for('static', filename='cartao_de_vacina/{{ cartao_de_vacina }}') }}" alt="Cartão de vacina">
 			<div class="btn-box">

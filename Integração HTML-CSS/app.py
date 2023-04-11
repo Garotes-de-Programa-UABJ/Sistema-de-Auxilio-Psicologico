@@ -16,7 +16,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), unique=False, nullable=False)
 
-class PerfilUsuario(db.Model):
+class perfil_usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome_completo = db.Column(db.String(100))
     nome_social = db.Column(db.String(100))
@@ -35,6 +35,10 @@ class PerfilUsuario(db.Model):
     tipo_bolsa = db.Column(db.String(100))
     motivo_atendimento = db.Column(db.String(100))
     pronomes = db.Column(db.String(100))
+    genero = db.Column(db.String(100))
+    usuario_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    usuario = db.relationship('User', backref='perfil_usuario')
 
 
 class Agendamento(db.Model):
@@ -43,8 +47,10 @@ class Agendamento(db.Model):
     hora = db.Column(db.String(80), unique=False, nullable=False)
     status= db.Column(db.String(80), unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    perfil_id= db.Column(db.Integer, db.ForeignKey('perfil_usuario.id'), nullable=False)
 
     user= db.relationship('User', backref='agendamentos')
+    perfil= db.relationship('perfil_usuario', backref='agendamentos')
 
 with app.app_context():
     db.create_all()
@@ -71,14 +77,9 @@ def agendar():
     data = request.form['data']
     hora = request.form['hora']
     status= 'Agendado'
+    perfil= perfil_usuario.query.filter_by(usuario_id=user.id).first()
 
-    # Verificar se o usuário já possui um agendamento
-    agendamento_existente = Agendamento.query.filter_by(user=user).first()
-    if agendamento_existente:
-        flash("Você já possui uma consulta marcada.", "danger")
-        return redirect(url_for('cadastradosucesso'))
-
-    agendamento = Agendamento(data=data, hora=hora, user=user, status=status)
+    agendamento = Agendamento(data=data, hora=hora, user=user, status=status, perfil=perfil)
     db.session.add(agendamento)
     db.session.commit()
 
@@ -96,8 +97,7 @@ def acompanhamento():
     user = current_user
 
     # Obter todos os agendamentos do banco de dados
-    agendamentos = Agendamento.query.filter_by(status='agendado').all()
-
+    agendamentos = Agendamento.query.filter_by(status='agendado', user=user).all()
 
     # Renderizar a página de acompanhamento, passando a lista de agendamentos e o usuário atualmente logado
     return render_template('acompanhamento.html', agendamentos=agendamentos, user=user)
@@ -117,9 +117,52 @@ def historico():
 def perfil():
     user = current_user
 
-    perfil_usuário = PerfilUsuario.query.filter_by(id=user.id).first()
+    perfilU = perfil_usuario.query.filter_by(usuario_id=user.id).all()
 
-    return render_template('perfil.html', user=user, perfil_usuário=perfil_usuário)
+    return render_template('perfil.html', perfilU=perfilU, user=user)
+@app.route('/perfil-editar', methods=['POST','GET'])
+@login_required
+def perfil_editar():
+    return render_template('perfileditar.html')
+
+@app.route('/perfil-editar_bd', methods=['POST','GET'])
+@login_required
+def perfil_editar_bd():
+    nome_completo = request.form['nome_completo']
+    nome_social = request.form['nome_social']
+    data_nascimento = request.form['data_nascimento']
+    naturalidade = request.form['naturalidade']
+    estado_civil = request.form['estado_civil']
+    cpf = request.form['cpf']
+    telefone = request.form['telefone']
+    email_institucional = request.form['email_institucional']
+    email_alternativo = request.form['email_alternativo']
+    endereco_residencial = request.form['endereco_residencial']
+    nome_mae = request.form['nome_mae']
+    curso = request.form['curso']
+    periodo_graduacao = request.form['periodo_graduacao']
+    bolsista = request.form['bolsista']
+    tipo_bolsa = request.form['tipo_bolsa']
+    motivo_atendimento = request.form['motivo_atendimento']
+    pronomes = request.form['pronomes']
+    genero = request.form['genero']
+    usuario= current_user
+
+    cpf = perfil_usuario.query.filter_by(cpf=cpf).first()
+    inst = perfil_usuario.query.filter_by(email_institucional=email_institucional).first()
+    if cpf:
+        flash('CPF já cadastrado!')
+        return redirect(url_for('perfil_editar'))
+    elif inst:
+        flash('Email já cadastrado!')
+        return redirect(url_for('perfil_editar'))
+    
+    new_perf= perfil_usuario(nome_completo=nome_completo, nome_social=nome_social, data_nascimento=data_nascimento, naturalidade=naturalidade, estado_civil=estado_civil, cpf=cpf, telefone=telefone, email_institucional=email_institucional, email_alternativo=email_alternativo, endereco_residencial=endereco_residencial, nome_mae=nome_mae, curso=curso, periodo_graduacao=periodo_graduacao, bolsista=bolsista, tipo_bolsa=tipo_bolsa, motivo_atendimento=motivo_atendimento, pronomes=pronomes, genero=genero, usuario=usuario)
+
+    db.session.add(new_perf)
+    db.session.commit()
+
+    return redirect(url_for('perfil'))
 
 @app.route('/home')
 def mostrarHome():
@@ -171,7 +214,8 @@ def register_db():
     db.session.add(new_user)
     db.session.commit()
 
-    return redirect(url_for('mostrarLogin'))
+    login_user(new_user)
+    return redirect(url_for('perfil_editar'))
 
 @app.route('/logout')
 @login_required

@@ -33,7 +33,7 @@
 
       <li class="navlink"><a href="/perfil">Perfil</a></li>
 
-      <li class="navlink">Sair</li>
+      <li class="navlink"><a href="/logout">Sair</a></li>
   </ul>
 
     <!-- Esse botão é o botãozinho hamburger do 'modo mobile' (não atente-se aos detalhes, apenas copie e cole no seu código) -->
@@ -63,7 +63,7 @@
 
       <li class="navlink"><a href="/perfil">Perfil</a></li>
 
-      <li class="navlink">Sair</li>
+      <li class="navlink"><a href="/logout">Sair</a></li>
   </ul>
   </header>
 
@@ -101,7 +101,7 @@
         <div class="organizador">
 
           <label for="">Nome:</label>
-          <h4 class="name">{{ linha[0] }}</h4>
+          <h4 class="name">{{ linha.perfil.nome_social }}</h4>
 
         </div>
 
@@ -115,42 +115,42 @@
         <div class="organizador">
 
           <label for="">CPF:</label>
-          <h4 class="cpf">{{ linha[2] }}</h4>
+          <h4 class="cpf">{{ linha.perfil.cpf }}</h4>
 
         </div>
 
         <div class="organizador">
 
           <label for="">Curso:</label>
-          <h4 class="curso">{{ linha[3] }}</h4>
+          <h4 class="curso">{{ linha.perfil.curso }}</h4>
 
         </div>
 
         <div class="organizador">
 
           <label for="">Contato:</label>
-          <h4 class="tel">{{ linha[4] }}</h4>
+          <h4 class="tel">{{ linha.perfil.telefone }}</h4>
 
         </div>
 
         <div class="organizador">
 
           <label for="">Data:</label>
-          <h4 class="date">{{ linha[5] }}</h4>
+          <h4 class="date">{{ linha.data }}</h4>
 
         </div>
 
         <div class="organizador">
 
           <label for="">Horário:</label>
-          <h4 class="time">{{ linha[6] }}</h4>
+          <h4 class="time">{{ linha.hora }}</h4>
 
         </div>
 
         <div class="organizador">
 
           <label for="">Gênero:</label>
-          <h4 class="name">{{ linha[7] }}</h4>
+          <h4 class="name">{{ linha.perfil.genero }}</h4>
 
         </div>
 
@@ -175,7 +175,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
 
     <script>
-      $('.date').mask('00/00/0000');
+      $('.date').mask('0000/00/00');
       $('.time').mask('00:00:00');
       $('.cpf').mask('000.000.000-00');
       $('.cep').mask('00000-000');

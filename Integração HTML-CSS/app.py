@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_required, current_user, login_user, logout_user
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -76,14 +77,36 @@ def agendar():
     user= current_user
     data = request.form['data']
     hora = request.form['hora']
-    status= 'Agendado'
     perfil= perfil_usuario.query.filter_by(usuario_id=user.id).first()
 
-    agendamento = Agendamento(data=data, hora=hora, user=user, status=status, perfil=perfil)
-    db.session.add(agendamento)
-    db.session.commit()
+    def verificar_horario_disponivel(data, hora):
+    # Consultar o banco de dados para verificar se já existe um agendamento com a mesma data e hora
+        agendamento_existente = Agendamento.query.filter_by(data=data, hora=hora, status='Agendado').first()
 
-    return redirect(url_for('acompanhamento'))
+    # Se já existe um agendamento com a mesma data e hora, retornar False, indicando que o horário não está disponível
+        if agendamento_existente:
+            return False
+
+    # Se não existe um agendamento com a mesma data e hora, retornar True, indicando que o horário está disponível
+        return True
+
+ # Chamar a função de verificação de horário disponível
+    if verificar_horario_disponivel(data, hora):
+        # Se o horário estiver disponível, verificar se o usuário tem um agendamento anterior com status diferente de 'começado'
+        agendamento_anterior = Agendamento.query.filter_by(user=user, status='Agendado').first()
+        if agendamento_anterior:
+            flash('Você já possui um agendamento marcado!', 'danger')
+            return redirect(url_for('acompanhamento'))
+
+        # Criar um novo agendamento
+        novo_agendamento = Agendamento(data=data, hora=hora, status='Agendado', user=user, perfil=perfil)
+        db.session.add(novo_agendamento)
+        db.session.commit()
+
+        return redirect(url_for('acompanhamento'))
+    else:
+        flash('Horário indisponível. Por favor, escolha outro horário.', 'danger')
+        return redirect(url_for('cadastradosucesso'))
 
 @app.route ('/agendamento')
 @login_required

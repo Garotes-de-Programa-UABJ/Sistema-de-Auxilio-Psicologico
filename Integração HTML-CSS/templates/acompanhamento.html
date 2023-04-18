@@ -70,7 +70,13 @@
   <div class="main">
 
     <h1>Acompanhar Consulta</h1>
-
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="alert alert-info">
+            {{ messages[0] }}
+        </div>
+    {% endif %}
+    {% endwith %}
     <div class="info-card">
 
       <div class="primeiro">

@@ -91,19 +91,17 @@
 
         <!-- <h1> é apenas um título -->
         <h1>Agendar Consulta</h1>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div>
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+        {% endwith %}
         
         <!-- Criação do formulário -->
         <form action="/agendar" method="POST">
             
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    
-                        {% for message in messages %}
-                            <li>{{ message }}</li>
-                        {% endfor %}
-                    
-                {% endif %}
-            {% endwith %}
             <!-- type="data" vai inserir um icone de um calendário automaticammente no input para o usuário escolher uma data -->
             <label for="data">Data:</label>
             <input class="data" type="date" name="data" required><br>

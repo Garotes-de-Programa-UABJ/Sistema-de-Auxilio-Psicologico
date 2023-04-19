@@ -51,7 +51,7 @@ label {
 }
 
 input[type="text"],
-input[type="cpf"],
+input[type="numbertext"],
 input[type="data"],
 input[type="email"],
 input[type="tel"],

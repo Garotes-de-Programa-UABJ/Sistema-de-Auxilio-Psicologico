@@ -95,7 +95,7 @@
             </select>
 
             <label for="cpf">CPF ou número de matrícula *</label>
-            <input type="text" id="cpf" name="cpf" required>
+            <input type="numbertext" id="cpf" name="cpf" required>
 
             <label for="telefone">Telefone (celular/whatsapp) *</label>
             <input type="tel" id="telefone" name="telefone" required>
@@ -107,7 +107,7 @@
             <input type="email" id="email_alternativo" name="email_alternativo" required>
 
             <label for="endereco_residencial">Endereço residencial *</label>
-            <textarea id="endereco_residencial" name="endereco_residencial" rows="3" required></textarea>
+            <input type="text" id="endereco_residencial" name="endereco_residencial" required>
 
             <label for="nome_mae">Nome da mãe *</label>
             <input type="text" id="nome_mae" name="nome_mae" required>
@@ -136,7 +136,7 @@
                 <option value="">Selecione</option>
                 <option value="PAD">PAD</option>
                 <option value="PAI">PAI</option>
-                <option value="PAG">PAG/</option>
+                <option value="PAG">PAG</option>
                 <option value="outro">Outro</option>
             </select>
 
@@ -176,7 +176,7 @@
 
     <script>
         $('#telefone').mask('(00) 00000-0000');
-        $('#cpf').mask('000.000.000-00', { reverse: true });
+        $('#cpf').mask('000.000.000-00');
         $('#data').mask('00/00/0000');
     </script>
     </form>

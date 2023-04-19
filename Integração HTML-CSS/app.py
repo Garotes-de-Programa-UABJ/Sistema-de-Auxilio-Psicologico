@@ -106,11 +106,11 @@ def agendar():
         return redirect(url_for('acompanhamento'))
     else:
         flash('Horário indisponível. Por favor, escolha outro horário.', 'danger')
-        return redirect(url_for('cadastradosucesso'))
+        return redirect(url_for('agendamento'))
 
 @app.route ('/agendamento')
 @login_required
-def cadastradosucesso():
+def agendamento():
     return render_template('formulario.html')
 
 @app.route("/acompanhamento", methods=['POST', 'GET'])

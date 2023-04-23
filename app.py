@@ -7,7 +7,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'uabjpsychoatendsecretkey'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:wKzs7JlkXjVYpDq496aG@containers-us-west-119.railway.app:5622/railway'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:8aZp6T3VHFbdmzGQlPIu@containers-us-west-35.railway.app:6768/railway'
 
 db = SQLAlchemy(app)
 

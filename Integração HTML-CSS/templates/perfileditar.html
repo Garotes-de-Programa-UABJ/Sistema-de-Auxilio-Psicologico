@@ -18,12 +18,12 @@
 
     <header class="navbar1">
 
-        <img src="/static/img/logo.png" alt="">
+        <a href="/"><img src="/static/img/logo.png" alt=""></a>
 
         <ul>
             <!-- <li> adiciona os itens da lista -->
             <!-- <a href=""> coloca links nos itens (os links você coloca entre as aspas do "href") -->
-            <li class="navlink"><a href="/">Agendar</a></li>
+            <li class="navlink"><a href="/agendamento">Agendar</a></li>
 
             <li class="navlink"><a href="/acompanhamento">Acompanhamento</a></li>
 
@@ -115,10 +115,10 @@
             <label for="curso">Curso *</label>
             <select id="curso" name="curso" required>
                 <option value="">Selecione</option>
-                <option value="computação">Engenharia da Computação</option>
-                <option value="automação">Engenharia de Controle e Automação</option>
-                <option value="química">Engenharia Química</option>
-                <option value="hídrica">Engenharia Hídrica</option>
+                <option value="Computação">Engenharia da Computação</option>
+                <option value="Automação">Engenharia de Controle e Automação</option>
+                <option value="Química">Engenharia Química</option>
+                <option value="Hídrica">Engenharia Hídrica</option>
             </select>
 
             <label for="periodo_graduacao">Período de graduação *</label>
@@ -140,9 +140,6 @@
                 <option value="outro">Outro</option>
             </select>
 
-            <label for="motivo_atendimento">Descreva brevemente o motivo de estar procurando atendimento *</label>
-            <textarea id="motivo_atendimento" name="motivo_atendimento" rows="5" required></textarea>
-
             <label for="pronomes">Pronomes</label>
             <select id="pronomes" name="pronomes">
                 <option value="">Selecione</option>
@@ -154,14 +151,14 @@
             <label for="checkbox-genero">Gênero</label>
             <select type="checkbox" name="genero" id="checkbox-genero">
                 <option value="">--Selecionar--</option>
-                <option value="feminino">Feminino</option>
-                <option value="masculino">Masculino</option>
-                <option value="negação">Prefiro não informar</option>
-                <option value="outro">Outro</option>
+                <option value="Feminino">Feminino</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Não Informado">Prefiro não informar</option>
+                <option value="Outro">Outro</option>
             </select>
 
             <label for="vacina" id="file-label">Carteira de vacinação:</label>
-            <input class="vacina" id="file-input" type="file" name="vacina" required><br>
+            <input class="vacina" id="file-input" type="file" name="vacina"><br>
 
             <div class="btn-box">
                 <button class="btn" type="submit">Salvar</button>

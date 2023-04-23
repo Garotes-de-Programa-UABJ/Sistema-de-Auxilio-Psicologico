@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuário - Editar</title>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}"> -->
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='editarperfil.css') }}">
+    <link rel="icon" href="/static/img/logo.ico" type="image/x-icon">
+</head>
+
+<body>
+
+    <header class="navbar1">
+
+        <a href="/"><img src="/static/img/logo.png" alt=""></a>
+
+        <ul>
+            <!-- <li> adiciona os itens da lista -->
+            <!-- <a href=""> coloca links nos itens (os links você coloca entre as aspas do "href") -->
+            <li class="navlink"><a href="/agendamento">Agendar</a></li>
+
+            <li class="navlink"><a href="/acompanhamento">Acompanhamento</a></li>
+
+            <li class="navlink"><a href="/historico">Histórico</a></li>
+
+            <li class="navlink"><a href="/perfil">Perfil</a></li>
+
+            <li class="navlink"><a href="/logout">Sair</a></li>
+        </ul>
+
+        <!-- Esse botão é o botãozinho hamburger do 'modo mobile' (não atente-se aos detalhes, apenas copie e cole no seu código) -->
+        <button class="btn-drop" onclick="menuDrop()">
+
+            <svg class="ham hamRotate ham1" viewBox="0 0 100 100" width="80" onclick="this.classList.toggle('active')"
+                onclick="menuDrop()">
+                <path class="line top"
+                    d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40" />
+                <path class="line middle" d="m 30,50 h 40" />
+                <path class="line bottom"
+                    d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40" />
+
+        </button>
+    </header>
+
+    <!-- Essa segunda 'navbar' ficará oculta, só aparecerá quando o  botãozinho do modo mobile for clicado -->
+    <header class="navbar2" id="navbar2">
+        <ul>
+            <!-- <li> adiciona os itens da lista -->
+            <!-- <a href=""> coloca links nos itens (os links você coloca entre as aspas do "href") -->
+            <li class="navlink"><a href="/agendamento">Agendar</a></li>
+
+            <li class="navlink"><a href="/acompanhamento">Acompanhamento</a></li>
+
+            <li class="navlink"><a href="/historico">Histórico</a></li>
+
+            <li class="navlink"><a href="/perfil">Perfil</a></li>
+
+            <li class="navlink"><a href="/logout">Sair</a></li>
+        </ul>
+    </header>
+
+    <div class="box">
+
+
+        <h1>Perfil do Usuário</h1>
+
+        <form method="POST" action="/perfil-editar_bd">
+
+            <legend>Informações pessoais</legend>
+            <label for="nome_completo">Nome completo *</label>
+            <input type="text" id="nome_completo" name="nome_completo" required>
+
+            <label for="nome_social">Nome social</label>
+            <input type="text" id="nome_social" name="nome_social">
+
+            <label for="data_nascimento">Data de nascimento *</label>
+            <input type="data" id="data" name="data_nascimento" required>
+
+            <label for="naturalidade">Naturalidade *</label>
+            <input type="text" id="naturalidade" name="naturalidade" required>
+
+            <label for="estado_civil">Estado civil *</label>
+            <select id="estado_civil" name="estado_civil" required>
+                <option value="">Selecione</option>
+                <option value="solteiro">Solteiro</option>
+                <option value="casado">Casado</option>
+                <option value="divorciado">Divorciado</option>
+                <option value="viuvo">Viúvo</option>
+            </select>
+
+            <label for="cpf">CPF ou número de matrícula *</label>
+            <input type="numbertext" id="cpf" name="cpf" required>
+
+            <label for="telefone">Telefone (celular/whatsapp) *</label>
+            <input type="tel" id="telefone" name="telefone" required>
+
+            <label for="email_institucional">Email institucional *</label>
+            <input type="email" id="email_institucional" name="email_institucional" required>
+
+            <label for="email_alternativo">Email alternativo *</label>
+            <input type="email" id="email_alternativo" name="email_alternativo" required>
+
+            <label for="endereco_residencial">Endereço residencial *</label>
+            <input type="text" id="endereco_residencial" name="endereco_residencial" required>
+
+            <label for="nome_mae">Nome da mãe *</label>
+            <input type="text" id="nome_mae" name="nome_mae" required>
+
+            <label for="curso">Curso *</label>
+            <select id="curso" name="curso" required>
+                <option value="">Selecione</option>
+                <option value="Computação">Engenharia da Computação</option>
+                <option value="Automação">Engenharia de Controle e Automação</option>
+                <option value="Química">Engenharia Química</option>
+                <option value="Hídrica">Engenharia Hídrica</option>
+            </select>
+
+            <label for="periodo_graduacao">Período de graduação *</label>
+            <input type="number" id="periodo_graduacao" name="periodo_graduacao" min="1" max="10" required>
+
+            <label for="bolsista">Bolsista? *</label>
+            <select id="bolsista" name="bolsista" required>
+                <option value="">Selecione</option>
+                <option value="sim">Sim</option>
+                <option value="nao">Não</option>
+            </select>
+
+            <label for="tipo_bolsa">Tipo de bolsa</label>
+            <select id="tipo_bolsa" name="tipo_bolsa">
+                <option value="">Selecione</option>
+                <option value="PAD">PAD</option>
+                <option value="PAI">PAI</option>
+                <option value="PAG">PAG</option>
+                <option value="outro">Outro</option>
+            </select>
+
+            <label for="pronomes">Pronomes</label>
+            <select id="pronomes" name="pronomes">
+                <option value="">Selecione</option>
+                <option value="ele">ele/dele</option>
+                <option value="ela">ela/dela</option>
+                <option value="neutro">neutro</option>
+            </select>
+
+            <label for="checkbox-genero">Gênero</label>
+            <select type="checkbox" name="genero" id="checkbox-genero">
+                <option value="">--Selecionar--</option>
+                <option value="Feminino">Feminino</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Não Informado">Prefiro não informar</option>
+                <option value="Outro">Outro</option>
+            </select>
+
+            <!--<label for="vacina" id="file-label">Carteira de vacinação:</label>
+            <input class="vacina" id="file-input" type="file" name="vacina"><br>-->
+
+            <div class="btn-box">
+                <button class="btn" type="submit">Salvar</button>
+            </div>
+        </div>
+        <footer>
+            <p>© Garotes de Programa- 2023 - Todos os direitos reservados</p>
+        </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
+
+    <script>
+        $('#telefone').mask('(00) 00000-0000');
+        $('#cpf').mask('000.000.000-00');
+        $('#data').mask('00/00/0000');
+    </script>
+    </form>
+    </div>
+</body>
+
+</html>

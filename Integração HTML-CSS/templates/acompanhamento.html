@@ -20,7 +20,7 @@
 
   <header class="navbar1">
     
-    <img src="/static/img/logo.png" alt="">
+    <a href="/"><img src="/static/img/logo.png" alt=""></a>
 
     <ul>
       <!-- <li> adiciona os itens da lista -->
@@ -93,7 +93,6 @@
           </div>
           <button class="mais" id="abre-fecha" onclick="mostrarMais()">Mostrar mais</button>
         </div>
-
         {% endfor %}
       </div>
     </div>
@@ -160,12 +159,20 @@
 
         </div>
 
+        <div class="organizador">
+  
+          <label for="">Motivo da Consulta:</label>
+          <h4 class="name">{{ linha.motivo_atendimento }}</h4>
+
+        </div>
+
         <div class="btn-box organizador">
-          <button onclick="sorry()">Cancelar consulta</button>
+          {% if linha.status in ['Marcado', 'Remarcado'] %}
+          <a href="{{ url_for('cancelar', agendamento_id=linha.id) }}">Cancelar consulta</a>
+          {% endif %}
         </div>
 
         <button class="menos" id="abre-fecha" onclick="mostrarMais()">Mostrar menos</button>
-
         {% endfor %}
       </div>
 

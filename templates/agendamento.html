@@ -45,7 +45,7 @@
         -->
 
         <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='form.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
         <link rel="icon" href="img/UFRPE.ico" type="image/x-icon">
 
@@ -57,7 +57,7 @@
 
             <!-- <h1>PI2</h1> é o Logotipo fuleiro da demonstração -->
             <!-- <h1>PI2</h1> -->
-            <img src="/static/img/logo.png" alt="">
+            <a href="/"><img src="/static/img/logo.png" alt=""></a>
 
 
             <!-- <ul> cria uma lista -->
@@ -105,13 +105,23 @@
             </ul>
         </header>
         <h1>Agendamento</h1>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div>
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+        {% endwith %}
         <form method="POST" action="/agendar">
 
             <label for="date">Data:</label>
             <input type="date" id="data" name="data" required><br><br>
 
             <label for="hora">Horário:</label>
-            <select id="hora" name="hora"></select><br><br>
+            <select id="hora" name="hora" required></select><br><br>
+
+            <label for="motivo_atendimento">Descreva brevemente o motivo de estar procurando atendimento:</label>
+            <input type='text' id="motivo_atendimento" name="motivo_atendimento" required></input><br><br>
 
             <div class="btn-box">
                 <button type="submit" class="btn-agendar" id="submitBtn">Agendar</button>
